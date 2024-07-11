@@ -1,4 +1,6 @@
-interface Activity {
+import { BeakerIcon, TagIcon } from "@heroicons/react/24/solid";
+
+export interface Activity {
   name: string;
   description: string;
   tags: string[];
@@ -6,33 +8,72 @@ interface Activity {
   // endDate: Date;
   startDate: string;
   endDate: string;
-  isCompleted: boolean;
+  isComplete: boolean;
 }
 
-function ActivityCard(activityItem: Activity) {
+interface ActivityCardProps {
+  activity: Activity;
+  onDelete: Function;
+  onComplete: Function;
+}
+
+export function ActivityCard({
+  activity,
+  onDelete,
+  onComplete,
+}: ActivityCardProps) {
   return (
     <>
       <div className="card bg-base-100 w-auto shadow-xl">
         <div className="card-body">
-          <h2 className="card-title">{activityItem.name}</h2>
-          <p>If a dog chews shoes whose shoes does he choose?</p>
-          <div className="card-actions justify-end">
-            <button className="btn btn-primary">Buy Now</button>
+          <h2 className="card-title">{activity.name}</h2>
+          <p>{activity.description}</p>
+          <div className="flex content-center">
+            <TagIcon className="size-6 text-success pt-1" />
+            <p>Tags: {activity.tags.join(",")}</p>
+          </div>
+          <div className="card-actions justify-end mt-5">
+            {!activity.isComplete ? (
+              <button
+                onClick={() => onComplete(activity.name)}
+                className="btn btn-sm btn-primary"
+              >
+                Mark as Complete
+              </button>
+            ) : (
+              ""
+            )}
+
+            <button
+              onClick={() => onDelete(activity.name)}
+              className="btn btn-sm btn-secondary"
+            >
+              Delete
+            </button>
           </div>
         </div>
       </div>
     </>
   );
 }
-function ActivityList(activity: Activity) {
+
+export function ActivityList({
+  activities,
+  onDelete,
+  onComplete,
+}: {
+  activities: Activity[];
+  onDelete: Function;
+  onComplete: Function;
+}) {
   let list = [
     {
-      name: activity.name,
+      name: "Grocery",
       description: "restock refrigerator",
       tags: ["weekly"],
       startDate: "2024-07-01 10:00:00",
       endDate: "2024-07-01 11:00:00",
-      isCompleted: false,
+      isComplete: false,
     },
     {
       name: "Workout",
@@ -40,7 +81,7 @@ function ActivityList(activity: Activity) {
       tags: ["weekly"],
       startDate: "2024-07-01 10:00:00",
       endDate: "2024-07-01 11:00:00",
-      isCompleted: false,
+      isComplete: false,
     },
     {
       name: "Gaming",
@@ -48,7 +89,7 @@ function ActivityList(activity: Activity) {
       tags: ["weekly"],
       startDate: "2024-07-01 10:00:00",
       endDate: "2024-07-01 11:00:00",
-      isCompleted: false,
+      isComplete: false,
     },
     {
       name: "Cooking",
@@ -56,20 +97,17 @@ function ActivityList(activity: Activity) {
       tags: ["weekly"],
       startDate: "2024-07-01 10:00:00",
       endDate: "2024-07-01 11:00:00",
-      isCompleted: false,
+      isComplete: false,
     },
   ];
 
-  return list.map((listItem, id) => (
+  return activities.map((item, id) => (
     <ActivityCard
       key={id}
-      name={listItem.name}
-      description={listItem.description}
-      tags={listItem.tags}
-      startDate={listItem.startDate}
-      endDate={listItem.endDate}
-      isCompleted={listItem.isCompleted}
+      activity={item}
+      onDelete={onDelete}
+      onComplete={onComplete}
     />
   ));
 }
-export { ActivityList };
+// export { ActivityList };
