@@ -1,4 +1,69 @@
+import { useEffect, useState } from "react";
+import dayjs, { Dayjs } from "dayjs";
+
+const ACTIVITY_STATUS = {
+  inactive: 0,
+  active: 1,
+  progress: 2,
+};
+
+interface Activity {
+  id: any;
+  name: string;
+  description: string;
+  tags: string[];
+  startDate: Dayjs;
+  endDate: Dayjs;
+  status: number;
+}
+
 const ActivityForm = () => {
+  const [activities, setActivities] = useState<Activity[]>([]);
+
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    // const inputTags = formData.get("tags") as string;
+    const newActivity = {
+      // ...formObject,
+      id: crypto.randomUUID() as string,
+      name: formData.get("name") as string,
+      // description: formData.get("description") as string,
+      // tags: inputTags ? inputTags.split(",") : [],
+      // startDate: dayjs(formData.get("startDate") as string),
+      // endDate: dayjs(formData.get("endDate") as string),
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore possimus placeat iste voluptatem molestias",
+      tags: ["tag1", "tag2"],
+      startDate: dayjs(),
+      endDate: dayjs().add(7, "day"),
+      status: ACTIVITY_STATUS.active,
+    };
+
+    // setActivities([...activities, newActivity]);
+    setActivities([newActivity]);
+
+    // event.target.reset();
+  };
+
+  useEffect(() => {
+    let storedActivity = localStorage.getItem("daylist-activities");
+    let previousActivity = [];
+    if (storedActivity) {
+      previousActivity = JSON.parse(storedActivity);
+      const combinedActivity = [...activities, ...previousActivity];
+
+      localStorage.setItem(
+        "daylist-activities",
+        JSON.stringify(combinedActivity)
+      );
+    } else {
+      activities.length > 0 &&
+        localStorage.setItem("daylist-activities", JSON.stringify(activities));
+    }
+  }, [activities]);
+
   return (
     <>
       {/* <dialog id="my_modal_3" className="modal"> */}
@@ -12,7 +77,7 @@ const ActivityForm = () => {
           </button>
         </form>
         <h3 className="font-bold text-lg">Create New Activity</h3>
-        <form>
+        <form onSubmit={handleSubmit} method="post">
           <div className="flex flex-col justify-center">
             <label className="form-control w-full">
               <div className="label">
@@ -58,7 +123,7 @@ const ActivityForm = () => {
                 <span className="label-text">Start Date</span>
               </div>
               <input
-                type="text"
+                type="datetime-local"
                 name="startDate"
                 placeholder=""
                 className="input input-bordered w-full"
@@ -70,7 +135,7 @@ const ActivityForm = () => {
                 <span className="label-text">End Date</span>
               </div>
               <input
-                type="text"
+                type="datetime-local"
                 name="endDate"
                 placeholder=""
                 className="input input-bordered w-full"
@@ -78,7 +143,13 @@ const ActivityForm = () => {
             </label>
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-2">
+            <button
+              className="btn btn-primary btn-outline my-3 w-40"
+              type="reset"
+            >
+              Cancel
+            </button>
             <button className="btn btn-primary my-3 w-40" type="submit">
               Add
             </button>
@@ -90,4 +161,4 @@ const ActivityForm = () => {
   );
 };
 
-export { ActivityForm };
+export { ActivityForm, ACTIVITY_STATUS };
