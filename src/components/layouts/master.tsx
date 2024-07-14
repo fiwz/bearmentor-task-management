@@ -7,7 +7,6 @@ const Master = ({ children }) => {
   return (
     <>
       <div className="container mx-auto mb-10 pb-5 w-screen">
-        Hello this is container
         {children}
         <Navigation></Navigation>
         <ActivityForm></ActivityForm>
