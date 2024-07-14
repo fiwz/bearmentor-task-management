@@ -1,9 +1,74 @@
-function ActivityForm(props: any) {
+import { useEffect, useState } from "react";
+import dayjs, { Dayjs } from "dayjs";
+
+const ACTIVITY_STATUS = {
+  inactive: 0,
+  active: 1,
+  progress: 2,
+};
+
+interface Activity {
+  id: any;
+  name: string;
+  description: string;
+  tags: string[];
+  startDate: Dayjs;
+  endDate: Dayjs;
+  status: number;
+}
+
+const ActivityForm = () => {
+  const [activities, setActivities] = useState<Activity[]>([]);
+
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    // const inputTags = formData.get("tags") as string;
+    const newActivity = {
+      // ...formObject,
+      id: crypto.randomUUID() as string,
+      name: formData.get("name") as string,
+      // description: formData.get("description") as string,
+      // tags: inputTags ? inputTags.split(",") : [],
+      // startDate: dayjs(formData.get("startDate") as string),
+      // endDate: dayjs(formData.get("endDate") as string),
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore possimus placeat iste voluptatem molestias",
+      tags: ["tag1", "tag2"],
+      startDate: dayjs(),
+      endDate: dayjs().add(7, "day"),
+      status: ACTIVITY_STATUS.active,
+    };
+
+    // setActivities([...activities, newActivity]);
+    setActivities([newActivity]);
+
+    // event.target.reset();
+  };
+
+  useEffect(() => {
+    let storedActivity = localStorage.getItem("daylist-activities");
+    let previousActivity = [];
+    if (storedActivity) {
+      previousActivity = JSON.parse(storedActivity);
+      const combinedActivity = [...activities, ...previousActivity];
+
+      localStorage.setItem(
+        "daylist-activities",
+        JSON.stringify(combinedActivity)
+      );
+    } else {
+      activities.length > 0 &&
+        localStorage.setItem("daylist-activities", JSON.stringify(activities));
+    }
+  }, [activities]);
+
   return (
     <>
+      {/* <dialog id="my_modal_3" className="modal"> */}
       <div className="modal-box">
         <form method="dialog">
-          {/* if there is a button in form, it will close the modal */}
           <button
             className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
             id="btnCloseModal"
@@ -12,28 +77,7 @@ function ActivityForm(props: any) {
           </button>
         </form>
         <h3 className="font-bold text-lg">Create New Activity</h3>
-        <form
-          onSubmit={(e: React.SyntheticEvent) => {
-            e.preventDefault();
-            const target = e.target as typeof e.target & {
-              name: { value: string };
-              description: { value: string };
-              tags: { value: string };
-              startDate: { value: string };
-              endDate: { value: string };
-            };
-            const payload = {
-              name: target.name.value,
-              description: target.description.value,
-              tags: target.tags.value,
-              startDate: target.startDate.value,
-              endDate: target.endDate.value,
-            };
-
-            props.formProps.props.addActivity(payload);
-            document.getElementById("btnCloseModal").click();
-          }}
-        >
+        <form onSubmit={handleSubmit} method="post">
           <div className="flex flex-col justify-center">
             <label className="form-control w-full">
               <div className="label">
@@ -79,7 +123,7 @@ function ActivityForm(props: any) {
                 <span className="label-text">Start Date</span>
               </div>
               <input
-                type="text"
+                type="datetime-local"
                 name="startDate"
                 placeholder=""
                 className="input input-bordered w-full"
@@ -91,7 +135,7 @@ function ActivityForm(props: any) {
                 <span className="label-text">End Date</span>
               </div>
               <input
-                type="text"
+                type="datetime-local"
                 name="endDate"
                 placeholder=""
                 className="input input-bordered w-full"
@@ -99,15 +143,22 @@ function ActivityForm(props: any) {
             </label>
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-2">
+            <button
+              className="btn btn-primary btn-outline my-3 w-40"
+              type="reset"
+            >
+              Cancel
+            </button>
             <button className="btn btn-primary my-3 w-40" type="submit">
               Add
             </button>
           </div>
         </form>
       </div>
+      {/* </dialog> */}
     </>
   );
-}
+};
 
-export { ActivityForm };
+export { ActivityForm, ACTIVITY_STATUS };

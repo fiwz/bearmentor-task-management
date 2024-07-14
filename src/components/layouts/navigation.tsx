@@ -1,9 +1,6 @@
-import { ActivityForm } from "./forms/ActivityForm";
-
-function Navigation(props: any) {
+const Navigation = () => {
   return (
     <>
-      {/* navbar */}
       <div className="navbar bg-base-100 py-4">
         <div className="navbar-start">
           <div className="dropdown">
@@ -46,24 +43,13 @@ function Navigation(props: any) {
           </a>
         </div>
         <div className="navbar-end">
-          <a
-            href="#"
-            className="btn btn-outline w-52 text-lg"
-            onClick={() =>
-              document.getElementById("modalAddActivity").showModal()
-            }
-          >
+          <a href="#" className="btn btn-outline w-52 text-lg">
             Add Activity
           </a>
         </div>
       </div>
-      {/* end of navbar */}
-
-      <dialog id="modalAddActivity" className="modal">
-        <ActivityForm formProps={props}></ActivityForm>
-      </dialog>
     </>
   );
-}
+};
 
 export default Navigation;
