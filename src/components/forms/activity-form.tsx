@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
+import { ActivityContext } from "../layouts/master";
 
 const ACTIVITY_STATUS = {
   inactive: 0,
@@ -64,8 +65,18 @@ const ActivityForm = () => {
     }
   }, [activities]);
 
+  const { setCoba } = useContext(ActivityContext);
+  function handle() {
+    setCoba("Geeks");
+  }
+
   return (
     <>
+      <div>
+        <h3>This is Child1 Component</h3>
+        <button onClick={() => handle()}>Click </button>
+      </div>
+
       {/* <dialog id="my_modal_3" className="modal"> */}
       <div className="modal-box">
         <form method="dialog">

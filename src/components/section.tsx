@@ -1,5 +1,7 @@
 import ActivityCard from "./card";
 import { ACTIVITY_STATUS } from "./forms/activity-form";
+import React, { useContext } from "react";
+import { ActivityContext } from "./layouts/master";
 
 const SECTION_TYPE = [
   { id: "recent", title: "Recent Activities", list: [] },
@@ -27,8 +29,16 @@ function setListByType(type: string) {
 }
 
 const Section = () => {
+  const { coba } = useContext(ActivityContext);
+
   return (
     <>
+      <div>
+        <br />
+        <h4>This is Child2 Component</h4>
+        <h4>hello: {coba}</h4>
+      </div>
+
       {SECTION_TYPE.map((type, index) => (
         <section className={`py-5 ${type.id}`} key={index}>
           <div
