@@ -1,5 +1,7 @@
 import ActivityCard from "./card";
 import { ACTIVITY_STATUS } from "./forms/activity-form";
+import { ActivityContext } from "../context/activity-context";
+import React from "react";
 
 const SECTION_TYPE = [
   { id: "recent", title: "Recent Activities", list: [] },
@@ -7,26 +9,35 @@ const SECTION_TYPE = [
   { id: "complete", title: "Complete Activities", list: [] },
 ];
 
-let list = localStorage.getItem("daylist-activities");
-let arrList = list ? JSON.parse(list as string) : [];
-
-function setListByType(type: string) {
-  if (type === "recent") {
-    return arrList.filter(
-      (item: any) => item.status === ACTIVITY_STATUS.active
-    );
-  } else if (type === "complete") {
-    return arrList.filter(
-      (item: any) => item.status === ACTIVITY_STATUS.inactive
-    );
-  } else {
-    return arrList.filter(
-      (item: any) => item.status === ACTIVITY_STATUS.progress
-    );
-  }
-}
+// let list = localStorage.getItem("daylist-activities");
+// let arrList = list ? JSON.parse(list as string) : [];
 
 const Section = () => {
+  // const { activities } = React.useContext(ActivityContext);
+  const ctxValue = React.useContext(ActivityContext);
+  let arrList = ctxValue?.activities;
+
+  function setListByType(type: string) {
+    if (arrList) {
+      switch (type) {
+        case "recent":
+          return arrList.filter(
+            (item: any) => item.status === ACTIVITY_STATUS.active
+          );
+
+        case "complete":
+          return arrList.filter(
+            (item: any) => item.status === ACTIVITY_STATUS.inactive
+          );
+
+        default:
+          return arrList.filter(
+            (item: any) => item.status === ACTIVITY_STATUS.progress
+          );
+      }
+    }
+  }
+
   return (
     <>
       {SECTION_TYPE.map((type, index) => (
