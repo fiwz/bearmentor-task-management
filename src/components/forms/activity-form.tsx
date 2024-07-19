@@ -1,84 +1,43 @@
-// import { useEffect, useState } from "react";
-import dayjs, { Dayjs } from "dayjs";
+import React from "react";
+import dayjs from "dayjs";
 import {
   ActivityContext,
   ActivityContextType,
 } from "../../context/activity-context";
-import React from "react";
 import { ACTIVITY_STATUS } from "../../context/activity-context";
 
 const ActivityForm = () => {
-  // const [activities, setActivities] = useState<Activity[]>([]);
-
-  // const handleSubmit = (event: any) => {
-  //   event.preventDefault();
-
-  //   const formData = new FormData(event.target);
-  //   // const inputTags = formData.get("tags") as string;
-  //   const newActivity = {
-  //     // ...formObject,
-  //     id: crypto.randomUUID() as string,
-  //     name: formData.get("name") as string,
-  //     // description: formData.get("description") as string,
-  //     // tags: inputTags ? inputTags.split(",") : [],
-  //     // startDate: dayjs(formData.get("startDate") as string),
-  //     // endDate: dayjs(formData.get("endDate") as string),
-  //     description:
-  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore possimus placeat iste voluptatem molestias",
-  //     tags: ["tag1", "tag2"],
-  //     startDate: dayjs(),
-  //     endDate: dayjs().add(7, "day"),
-  //     status: ACTIVITY_STATUS.active,
-  //   };
-
-  //   // setActivities([...activities, newActivity]);
-  //   setActivities([newActivity]);
-
-  //   // event.target.reset();
-  // };
-
-  // useEffect(() => {
-  //   let storedActivity = localStorage.getItem("daylist-activities");
-  //   let previousActivity = [];
-  //   if (storedActivity) {
-  //     previousActivity = JSON.parse(storedActivity);
-  //     const combinedActivity = [...activities, ...previousActivity];
-
-  //     localStorage.setItem(
-  //       "daylist-activities",
-  //       JSON.stringify(combinedActivity)
-  //     );
-  //   } else {
-  //     activities.length > 0 &&
-  //       localStorage.setItem("daylist-activities", JSON.stringify(activities));
-  //   }
-  // }, [activities]);
-
   const ctxValue = React.useContext(ActivityContext) as ActivityContextType;
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
-    // const inputTags = formData.get("tags") as string;
+    const inputTags = formData.get("tags") as string;
     const newActivity = {
-      // ...formObject,
       id: crypto.randomUUID() as string,
       name: formData.get("name") as string,
-      // description: formData.get("description") as string,
-      // tags: inputTags ? inputTags.split(",") : [],
-      // startDate: dayjs(formData.get("startDate") as string),
-      // endDate: dayjs(formData.get("endDate") as string),
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore possimus placeat iste voluptatem molestias",
-      tags: ["tag1", "tag2"],
-      startDate: dayjs(),
-      endDate: dayjs().add(7, "day"),
+      description: formData.get("description") as string,
+      tags: inputTags ? inputTags.split(",") : [],
+      startDate: dayjs(formData.get("startDate") as string),
+      endDate: dayjs(formData.get("endDate") as string),
       status: ACTIVITY_STATUS.active,
     };
 
-    console.log("inputan", newActivity);
+    ctxValue.addActivity(newActivity);
 
-    // e.target.reset();
+    e.target.reset();
+  };
+
+  const activityToUpdate = ctxValue.showSelectedActivity;
+
+  const [formContent, setFormContent] = React.useState({});
+  const handleForm = (
+    e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
+  ): void => {
+    setFormContent({
+      ...formContent,
+      [e.currentTarget.id]: e.currentTarget.value,
+    });
   };
 
   return (
@@ -101,10 +60,13 @@ const ActivityForm = () => {
                 <span className="label-text">Activity</span>
               </div>
               <input
+                onChange={handleForm}
+                autoComplete="off"
                 type="text"
                 name="name"
                 placeholder="Example: Snowboarding"
                 className="input input-bordered w-full"
+                value={activityToUpdate?.name && activityToUpdate?.name}
               />
             </label>
 
@@ -113,6 +75,7 @@ const ActivityForm = () => {
                 <span className="label-text">Description</span>
               </div>
               <textarea
+                onChange={handleForm}
                 name="description"
                 className="input input-bordered w-full"
               ></textarea>
@@ -123,6 +86,8 @@ const ActivityForm = () => {
                 <span className="label-text">Tags</span>
               </div>
               <input
+                onChange={handleForm}
+                autoComplete="off"
                 type="text"
                 name="tags"
                 placeholder=""
@@ -140,7 +105,11 @@ const ActivityForm = () => {
                 <span className="label-text">Start Date</span>
               </div>
               <input
+                onChange={handleForm}
+                autoComplete="off"
                 type="datetime-local"
+                defaultValue={dayjs().format("YYYY-MM-DDTHH:mm").toString()}
+                min={dayjs().format("YYYY-MM-DDTHH:mm").toString()}
                 name="startDate"
                 placeholder=""
                 className="input input-bordered w-full"
@@ -152,7 +121,14 @@ const ActivityForm = () => {
                 <span className="label-text">End Date</span>
               </div>
               <input
+                onChange={handleForm}
+                autoComplete="off"
                 type="datetime-local"
+                defaultValue={dayjs()
+                  .add(2, "hour")
+                  .format("YYYY-MM-DDTHH:mm")
+                  .toString()}
+                min={dayjs().format("YYYY-MM-DDTHH:mm").toString()}
                 name="endDate"
                 placeholder=""
                 className="input input-bordered w-full"
