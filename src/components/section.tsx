@@ -1,6 +1,5 @@
 import ActivityCard from "./card";
-import { ACTIVITY_STATUS } from "./forms/activity-form";
-import { ActivityContext } from "../context/activity-context";
+import { ActivityContext, ACTIVITY_STATUS } from "../context/activity-context";
 import React from "react";
 
 const SECTION_TYPE = [

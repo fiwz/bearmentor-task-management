@@ -1,29 +1,64 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
-
-const ACTIVITY_STATUS = {
-  inactive: 0,
-  active: 1,
-  progress: 2,
-};
-
-interface Activity {
-  id: any;
-  name: string;
-  description: string;
-  tags: string[];
-  startDate: Dayjs;
-  endDate: Dayjs;
-  status: number;
-}
+import {
+  ActivityContext,
+  ActivityContextType,
+} from "../../context/activity-context";
+import React from "react";
+import { ACTIVITY_STATUS } from "../../context/activity-context";
 
 const ActivityForm = () => {
-  const [activities, setActivities] = useState<Activity[]>([]);
+  // const [activities, setActivities] = useState<Activity[]>([]);
 
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
+  // const handleSubmit = (event: any) => {
+  //   event.preventDefault();
 
-    const formData = new FormData(event.target);
+  //   const formData = new FormData(event.target);
+  //   // const inputTags = formData.get("tags") as string;
+  //   const newActivity = {
+  //     // ...formObject,
+  //     id: crypto.randomUUID() as string,
+  //     name: formData.get("name") as string,
+  //     // description: formData.get("description") as string,
+  //     // tags: inputTags ? inputTags.split(",") : [],
+  //     // startDate: dayjs(formData.get("startDate") as string),
+  //     // endDate: dayjs(formData.get("endDate") as string),
+  //     description:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore possimus placeat iste voluptatem molestias",
+  //     tags: ["tag1", "tag2"],
+  //     startDate: dayjs(),
+  //     endDate: dayjs().add(7, "day"),
+  //     status: ACTIVITY_STATUS.active,
+  //   };
+
+  //   // setActivities([...activities, newActivity]);
+  //   setActivities([newActivity]);
+
+  //   // event.target.reset();
+  // };
+
+  // useEffect(() => {
+  //   let storedActivity = localStorage.getItem("daylist-activities");
+  //   let previousActivity = [];
+  //   if (storedActivity) {
+  //     previousActivity = JSON.parse(storedActivity);
+  //     const combinedActivity = [...activities, ...previousActivity];
+
+  //     localStorage.setItem(
+  //       "daylist-activities",
+  //       JSON.stringify(combinedActivity)
+  //     );
+  //   } else {
+  //     activities.length > 0 &&
+  //       localStorage.setItem("daylist-activities", JSON.stringify(activities));
+  //   }
+  // }, [activities]);
+
+  const ctxValue = React.useContext(ActivityContext) as ActivityContextType;
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
     // const inputTags = formData.get("tags") as string;
     const newActivity = {
       // ...formObject,
@@ -41,28 +76,10 @@ const ActivityForm = () => {
       status: ACTIVITY_STATUS.active,
     };
 
-    // setActivities([...activities, newActivity]);
-    setActivities([newActivity]);
+    console.log("inputan", newActivity);
 
-    // event.target.reset();
+    // e.target.reset();
   };
-
-  useEffect(() => {
-    let storedActivity = localStorage.getItem("daylist-activities");
-    let previousActivity = [];
-    if (storedActivity) {
-      previousActivity = JSON.parse(storedActivity);
-      const combinedActivity = [...activities, ...previousActivity];
-
-      localStorage.setItem(
-        "daylist-activities",
-        JSON.stringify(combinedActivity)
-      );
-    } else {
-      activities.length > 0 &&
-        localStorage.setItem("daylist-activities", JSON.stringify(activities));
-    }
-  }, [activities]);
 
   return (
     <>
@@ -161,4 +178,4 @@ const ActivityForm = () => {
   );
 };
 
-export { ActivityForm, ACTIVITY_STATUS };
+export { ActivityForm };
