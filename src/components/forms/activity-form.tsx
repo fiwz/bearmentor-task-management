@@ -71,7 +71,7 @@ const ActivityForm = () => {
                 name="name"
                 placeholder="Example: Snowboarding"
                 className="input input-bordered w-full"
-                defaultValue={activityToUpdate?.name && activityToUpdate?.name}
+                defaultValue={activityToUpdate ? activityToUpdate?.name : ""}
               />
             </label>
 
@@ -84,7 +84,7 @@ const ActivityForm = () => {
                 name="description"
                 className="input input-bordered w-full"
                 defaultValue={
-                  activityToUpdate?.description && activityToUpdate?.description
+                  activityToUpdate ? activityToUpdate?.description : ""
                 }
               ></textarea>
             </label>
@@ -101,7 +101,7 @@ const ActivityForm = () => {
                 placeholder=""
                 className="input input-bordered w-full"
                 defaultValue={
-                  activityToUpdate?.tags && activityToUpdate?.tags.join(",")
+                  activityToUpdate ? activityToUpdate?.tags.join(",") : ""
                 }
               />
               <div className="label">
