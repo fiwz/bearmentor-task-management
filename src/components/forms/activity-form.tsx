@@ -1,7 +1,6 @@
 import React from "react";
 import dayjs from "dayjs";
 import {
-  Activity,
   ActivityContext,
   ActivityContextType,
 } from "../../context/activity-context";

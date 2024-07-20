@@ -11,21 +11,6 @@ function getBadgeClass() {
 }
 
 const ActivityCard = ({ activities }: any) => {
-  function deleteActivity(selectedId: string) {
-    const filteredActivities = activities.filter(
-      (activity: any) => activity.id !== selectedId
-    );
-    if (filteredActivities) {
-      localStorage.setItem(
-        "daylist-activities",
-        JSON.stringify(filteredActivities)
-      );
-    } else {
-      activities.length > 0 &&
-        localStorage.setItem("daylist-activities", JSON.stringify([]));
-    }
-  }
-
   const ctxValue = React.useContext(ActivityContext);
 
   return (
