@@ -24,6 +24,8 @@ export type ActivityContextType = {
   updateActivity: Function;
   showActivity: Function;
   deleteActivity: Function;
+  markCompleteActivity: Function;
+  showSelectedActivity: Activity | null;
 };
 
 export const ActivityContext = React.createContext<ActivityContextType | null>(
@@ -32,41 +34,32 @@ export const ActivityContext = React.createContext<ActivityContextType | null>(
 
 const ActivityProvider = ({ children }: any) => {
   const [activities, setActivities] = React.useState<Activity[]>([
-    {
-      id: crypto.randomUUID() as string,
-      // name: formData.get("name") as string,
-      name: "Coba Data Pertama",
-      // description: formData.get("description") as string,
-      // tags: inputTags ? inputTags.split(",") : [],
-      // startDate: dayjs(formData.get("startDate") as string),
-      // endDate: dayjs(formData.get("endDate") as string),
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore possimus placeat iste voluptatem molestias",
-      tags: ["tag1", "tag2"],
-      startDate: dayjs(),
-      endDate: dayjs().add(7, "day"),
-      status: ACTIVITY_STATUS.active,
-    },
+    // {
+    //   id: crypto.randomUUID() as string,
+    //   name: "Dummy Activity Title",
+    //   description:
+    //     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore possimus placeat iste voluptatem molestias",
+    //   tags: ["tag1", "tag2"],
+    //   startDate: dayjs(),
+    //   endDate: dayjs().add(7, "day"),
+    //   status: ACTIVITY_STATUS.active,
+    // },
   ]);
+
+  const [showSelectedActivity, setShowSelectedActivity] =
+    React.useState<Activity | null>(null);
 
   const addActivity = (activity: Activity) => {
     const newActivity = {
-      // ...formObject,
       id: crypto.randomUUID() as string,
-      // name: formData.get("name") as string,
       name: activity.name,
-      // description: formData.get("description") as string,
-      // tags: inputTags ? inputTags.split(",") : [],
-      // startDate: dayjs(formData.get("startDate") as string),
-      // endDate: dayjs(formData.get("endDate") as string),
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore possimus placeat iste voluptatem molestias",
-      tags: ["tag1", "tag2"],
-      startDate: dayjs(),
-      endDate: dayjs().add(7, "day"),
+      description: activity.description ? activity.description : "",
+      tags: activity.tags ? activity.tags : [],
+      startDate: dayjs(activity.startDate),
+      endDate: dayjs(activity.endDate),
       status: ACTIVITY_STATUS.active,
     };
-    setActivities([...activities, newActivity]);
+    setActivities([newActivity, ...activities]);
   };
 
   const updateActivity = (id: string) => {
@@ -78,18 +71,29 @@ const ActivityProvider = ({ children }: any) => {
     });
   };
 
+  const markCompleteActivity = (id: string) => {
+    const filteredActivities = activities.filter((activity) => {
+      if (activity.id === id) {
+        activity.status = ACTIVITY_STATUS.inactive;
+      }
+      return activity;
+    });
+    setActivities(filteredActivities);
+  };
+
   const showActivity = (id: string) => {
-    const selectedActivity = activities.filter(
-      (activity) => activity.id === id
-    );
+    const selectedActivity = activities.find((activity) => activity.id === id);
+
+    if (selectedActivity) setShowSelectedActivity(selectedActivity);
+
     return selectedActivity;
   };
 
   const deleteActivity = (id: string) => {
-    const filteredActivity = activities.filter(
+    const filteredActivities = activities.filter(
       (activity) => activity.id !== id
     );
-    setActivities(filteredActivity);
+    setActivities(filteredActivities);
   };
 
   return (
@@ -100,6 +104,8 @@ const ActivityProvider = ({ children }: any) => {
         updateActivity,
         showActivity,
         deleteActivity,
+        markCompleteActivity,
+        showSelectedActivity,
       }}
     >
       {children}
