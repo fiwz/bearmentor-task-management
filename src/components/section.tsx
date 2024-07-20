@@ -1,6 +1,7 @@
-import ActivityCard from "./card";
-import { ActivityContext, ACTIVITY_STATUS } from "../context/activity-context";
 import React from "react";
+import { ActivityContext, ACTIVITY_STATUS } from "../context/activity-context";
+
+import ActivityCard from "./card";
 
 const SECTION_TYPE = [
   { id: "recent", title: "Recent Activities", list: [] },
