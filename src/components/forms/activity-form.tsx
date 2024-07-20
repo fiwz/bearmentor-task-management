@@ -25,7 +25,6 @@ const ActivityForm = () => {
       ...formContent,
     };
     newActivity["tags"] = newActivity?.tags?.split(",");
-    console.log("coba", newActivity, "tags", newActivity.tags);
 
     ctxValue.addActivity(newActivity);
 
