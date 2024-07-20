@@ -29,12 +29,12 @@ const Navigation = () => {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>
-                <a className="text-xl text-neutral" href="/">
+                <a className="text-neutral" href="/">
                   Overview
                 </a>
               </li>
               <li>
-                <a className="text-xl text-neutral" href="/list">
+                <a className="text-neutral" href="/list">
                   List
                 </a>
               </li>
@@ -43,14 +43,14 @@ const Navigation = () => {
         </div>
         <div className="navbar-center">
           <a
-            className="btn btn-ghost text-4xl text-secondary font-bold"
+            className="btn btn-ghost text-2xl text-secondary font-bold"
             href="/"
           >
             DayList
           </a>
         </div>
         <div className="navbar-end">
-          <a href="#" className="btn btn-outline w-52 text-lg">
+          <a href="#" className="btn btn-outline w-auto me-3">
             Add Activity
           </a>
         </div>

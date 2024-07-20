@@ -55,7 +55,7 @@ const ActivityForm = () => {
             ✕
           </button>
         </form>
-        <h3 className="font-bold text-lg">
+        <h3 className="font-bold">
           {activityToUpdate ? "Update" : "Create New"} Activity
         </h3>
         <form onSubmit={handleSubmit} method="post">
@@ -82,7 +82,7 @@ const ActivityForm = () => {
               <textarea
                 onChange={handleForm}
                 name="description"
-                className="input input-bordered w-full"
+                className="input input-bordered w-full py-2"
                 defaultValue={
                   activityToUpdate ? activityToUpdate?.description : ""
                 }
@@ -135,7 +135,7 @@ const ActivityForm = () => {
                 }
                 name="startDate"
                 placeholder=""
-                className="input input-bordered w-full"
+                className="input input-bordered w-full text-sm"
               />
             </label>
 
@@ -166,7 +166,7 @@ const ActivityForm = () => {
                 }
                 name="endDate"
                 placeholder=""
-                className="input input-bordered w-full"
+                className="input input-bordered w-full text-sm"
               />
             </label>
           </div>

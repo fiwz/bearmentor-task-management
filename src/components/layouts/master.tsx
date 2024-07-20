@@ -7,11 +7,13 @@ const Master = ({ children }: any) => {
   return (
     <>
       <ActivityProvider>
-        <div className="container mx-auto mb-10 pb-5 w-screen">
+        <div className="container mx-auto mb-10 pb-5">
           {children}
           <Navigation></Navigation>
-          <ActivityForm></ActivityForm>
-          <Section></Section>
+          <div className="px-5">
+            <ActivityForm></ActivityForm>
+            <Section></Section>
+          </div>
         </div>
       </ActivityProvider>
     </>

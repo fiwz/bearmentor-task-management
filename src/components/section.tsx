@@ -43,7 +43,7 @@ const Section = () => {
       {SECTION_TYPE.map((type, index) => (
         <section className={`py-5 ${type.id}`} key={index}>
           <div
-            className={`text-2xl text-secondary font-semibold py-3 ${type.id}`}
+            className={`text-lg text-secondary font-semibold py-3 ${type.id}`}
           >
             {type.title}
           </div>

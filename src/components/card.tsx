@@ -91,7 +91,9 @@ const ActivityCard = ({ activities }: any) => {
           </div>
         ))
       ) : (
-        <div className="font-semibold text-lg">No activities available</div>
+        <div className="flex justify-start">
+          <div>No activities available</div>
+        </div>
       )}
     </>
   );
