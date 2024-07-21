@@ -4,6 +4,8 @@ import {
   ActivityContextType,
 } from "../../context/activity-context";
 
+import { CheckCircleIcon } from "@heroicons/react/24/solid";
+
 const Navigation = () => {
   const ctxValue = React.useContext(ActivityContext) as ActivityContextType;
 
@@ -54,6 +56,7 @@ const Navigation = () => {
             className="btn btn-ghost text-2xl text-secondary font-bold"
             href="/"
           >
+            <CheckCircleIcon className="size-8" />
             DayList
           </a>
         </div>

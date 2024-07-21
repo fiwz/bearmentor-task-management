@@ -7,6 +7,7 @@ const SECTION_TYPE = [
   { id: "recent", title: "Recent Activities", list: [] },
   { id: "nearest-deadline", title: "Nearest Deadline", list: [] },
   { id: "complete", title: "Complete Activities", list: [] },
+  { id: "all", title: "All Activities", list: [] },
 ];
 
 // let list = localStorage.getItem("daylist-activities");
@@ -19,21 +20,33 @@ const Section = () => {
 
   function setListByType(type: string) {
     if (arrList) {
+      let filteredList = arrList;
       switch (type) {
         case "recent":
-          return arrList.filter(
-            (item: any) => item.status === ACTIVITY_STATUS.active
+          filteredList = arrList.filter(
+            (item: any, idx: number) =>
+              item.status === ACTIVITY_STATUS.active && idx <= 3
           );
+          return filteredList;
 
         case "complete":
-          return arrList.filter(
-            (item: any) => item.status === ACTIVITY_STATUS.inactive
+          filteredList = arrList.filter(
+            (item: any, idx: number) =>
+              item.status === ACTIVITY_STATUS.inactive && idx <= 3
+          );
+          return filteredList;
+
+        case "nearest-deadline":
+          const sortedList = arrList.sort(
+            (a, b) => a.endDate.unix() - b.endDate.unix()
+          );
+          return sortedList.filter(
+            (item: any, idx: number) =>
+              item.status === ACTIVITY_STATUS.active && idx <= 3
           );
 
         default:
-          return arrList.filter(
-            (item: any) => item.status === ACTIVITY_STATUS.progress
-          );
+          return arrList;
       }
     }
   }

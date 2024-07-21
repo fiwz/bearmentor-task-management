@@ -35,22 +35,10 @@ export const ActivityContext = React.createContext<ActivityContextType | null>(
 );
 
 const ActivityProvider = ({ children }: any) => {
-  const [activities, setActivities] = React.useState<Activity[]>([
-    // {
-    //   id: crypto.randomUUID() as string,
-    //   name: "Dummy Activity Title",
-    //   description:
-    //     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore possimus placeat iste voluptatem molestias",
-    //   tags: ["tag1", "tag2"],
-    //   startDate: dayjs(),
-    //   endDate: dayjs().add(7, "day"),
-    //   status: ACTIVITY_STATUS.active,
-    // },
-  ]);
+  const [activities, setActivities] = React.useState<Activity[]>([]);
 
   const [modalFormOpen, setModalFormOpen] = useState<Boolean>();
   const updateModalForm = (status: Boolean) => {
-    console.log("kepanggil", status);
     if (status !== undefined) setModalFormOpen(status);
   };
 
@@ -102,6 +90,7 @@ const ActivityProvider = ({ children }: any) => {
 
     if (selectedActivity) setShowSelectedActivity(selectedActivity);
 
+    setModalFormOpen(true);
     return selectedActivity;
   };
 

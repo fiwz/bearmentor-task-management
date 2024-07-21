@@ -24,13 +24,11 @@ const ActivityForm = () => {
   const {
     register,
     handleSubmit,
-    watch,
+    // watch,
     reset,
     formState: { errors },
     setValue,
   } = useForm<Inputs>();
-
-  console.log(watch("name"));
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     if (data.type == "update") {
@@ -98,19 +96,19 @@ const ActivityForm = () => {
               ✕
             </button>
           </div>
-          <h3 className="font-bold">
+          <h3 className="font-bold text-lg">
             {activityToUpdate ? "Update" : "Create New"} Activity
           </h3>
           <form onSubmit={handleSubmit(onSubmit)}>
             <input
               type="hidden"
               {...register("id")}
-              defaultValue={activityToUpdate ? activityToUpdate?.id : ""}
+              // defaultValue={activityToUpdate ? activityToUpdate?.id : ""}
             />
             <input
               type="hidden"
               {...register("type")}
-              defaultValue={activityToUpdate ? "update" : "create"}
+              // defaultValue={activityToUpdate ? "update" : "create"}
             />
             <div className="flex flex-col justify-center">
               <label className="form-control w-full">
@@ -125,7 +123,7 @@ const ActivityForm = () => {
                   })}
                   placeholder="Example: Snowboarding"
                   className="input input-bordered w-full"
-                  defaultValue={activityToUpdate ? activityToUpdate?.name : ""}
+                  // defaultValue={activityToUpdate ? activityToUpdate?.name : ""}
                 />
                 {errors.name && (
                   <p role="alert" className="text-xs text-error pt-1">
@@ -141,9 +139,9 @@ const ActivityForm = () => {
                 <textarea
                   {...register("description")}
                   className="input input-bordered w-full py-2"
-                  defaultValue={
-                    activityToUpdate ? activityToUpdate?.description : ""
-                  }
+                  // defaultValue={
+                  //   activityToUpdate ? activityToUpdate?.description : ""
+                  // }
                 ></textarea>
               </label>
 
@@ -157,9 +155,9 @@ const ActivityForm = () => {
                   {...register("tags")}
                   placeholder=""
                   className="input input-bordered w-full"
-                  defaultValue={
-                    activityToUpdate ? activityToUpdate?.tags.join(",") : ""
-                  }
+                  // defaultValue={
+                  //   activityToUpdate ? activityToUpdate?.tags.join(",") : ""
+                  // }
                 />
                 <div className="label">
                   <span className="label-text-alt">
@@ -234,7 +232,7 @@ const ActivityForm = () => {
                         {...register("status")}
                         type="checkbox"
                         className="toggle toggle-primary"
-                        defaultChecked={activityToUpdate?.status ? true : false}
+                        defaultChecked={activityToUpdate?.status ? false : true}
                       />
                     </label>
                   </div>
@@ -244,7 +242,7 @@ const ActivityForm = () => {
 
             <div className="flex justify-end gap-2 mt-2">
               <button
-                className="btn btn-primary btn-outline my-3 w-40"
+                className="btn btn-primary btn-outline my-3 w-28"
                 onClick={() => {
                   resetForm();
                   ctxValue.updateModalForm(false);
@@ -252,7 +250,7 @@ const ActivityForm = () => {
               >
                 Cancel
               </button>
-              <button className="btn btn-primary my-3 w-40" type="submit">
+              <button className="btn btn-primary my-3 w-28" type="submit">
                 {activityToUpdate ? "Update" : "Add"}
               </button>
             </div>
