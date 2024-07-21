@@ -7,7 +7,6 @@ const SECTION_TYPE = [
   { id: "recent", title: "Recent Activities", list: [] },
   { id: "nearest-deadline", title: "Nearest Deadline", list: [] },
   { id: "complete", title: "Complete Activities", list: [] },
-  { id: "all", title: "All Activities", list: [] },
 ];
 
 // let list = localStorage.getItem("daylist-activities");
