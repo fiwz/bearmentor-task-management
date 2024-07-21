@@ -2,6 +2,7 @@ import Navigation from "./navigation";
 import Section from "../section";
 import { ActivityForm } from "../forms/activity-form";
 import ActivityProvider from "../../context/activity-context";
+import { Intro } from "../intro";
 
 const Master = ({ children }: any) => {
   return (
@@ -11,6 +12,7 @@ const Master = ({ children }: any) => {
           {children}
           <Navigation></Navigation>
           <div className="px-5">
+            <Intro></Intro>
             <ActivityForm></ActivityForm>
             <Section></Section>
           </div>
