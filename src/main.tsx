@@ -4,7 +4,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Master from "./components/layouts/master.tsx";
-import ListView from "./components/layouts/list-view.tsx";
+// import ListView from "./components/layouts/list-view.tsx";
 
 const router = createBrowserRouter([
   {
@@ -13,7 +13,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/list",
-    element: <ListView></ListView>,
+    element: <Master></Master>,
   },
 ]);
 
