@@ -9,7 +9,7 @@ import {
   CheckCircleIcon,
 } from "@heroicons/react/24/outline";
 
-function getBadgeClass() {
+export function getBadgeClass() {
   const tagClasses = ["", "badge-primary", "badge-secondary", "badge-accent"];
   return tagClasses[Math.floor(Math.random() * tagClasses.length)];
 }
