@@ -1,12 +1,8 @@
 import "./App.css";
-import Master from "./components/layouts/master";
+// import Master from "./components/layouts/master";
 
 function App() {
-  return (
-    <>
-      <Master></Master>
-    </>
-  );
+  return <>{/* <Master></Master> */}</>;
 }
 
 export default App;
