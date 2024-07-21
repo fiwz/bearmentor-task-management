@@ -65,12 +65,13 @@ const ActivityCard = ({ activities }: any) => {
                 >
                   Delete
                 </button>
-                <button
+                <a
+                  href="#modalForm"
                   className="btn btn-sm btn-secondary text-xs"
                   onClick={() => ctxValue?.showActivity(activity.id)}
                 >
                   Update
-                </button>
+                </a>
               </div>
             </div>
           </div>

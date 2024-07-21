@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 
 export const ACTIVITY_STATUS = {
   inactive: 0,
   active: 1,
-  progress: 2,
+  // progress: 2,
 };
 
 export interface Activity {
@@ -26,6 +26,8 @@ export type ActivityContextType = {
   deleteActivity: Function;
   markCompleteActivity: Function;
   showSelectedActivity: Activity | null;
+  modalFormOpen?: Boolean;
+  updateModalForm: Function;
 };
 
 export const ActivityContext = React.createContext<ActivityContextType | null>(
@@ -46,6 +48,12 @@ const ActivityProvider = ({ children }: any) => {
     // },
   ]);
 
+  const [modalFormOpen, setModalFormOpen] = useState<Boolean>();
+  const updateModalForm = (status: Boolean) => {
+    console.log("kepanggil", status);
+    if (status !== undefined) setModalFormOpen(status);
+  };
+
   const [showSelectedActivity, setShowSelectedActivity] =
     React.useState<Activity | null>(null);
 
@@ -54,7 +62,7 @@ const ActivityProvider = ({ children }: any) => {
       id: crypto.randomUUID() as string,
       name: activity.name,
       description: activity.description ? activity.description : "",
-      tags: activity.tags ? activity.tags : [],
+      tags: activity.tags ? String(activity.tags).split(",") : [],
       startDate: dayjs(activity.startDate),
       endDate: dayjs(activity.endDate),
       status: ACTIVITY_STATUS.active,
@@ -62,13 +70,21 @@ const ActivityProvider = ({ children }: any) => {
     setActivities([newActivity, ...activities]);
   };
 
-  const updateActivity = (id: string) => {
-    activities.filter((activity) => {
-      if (activity.id === id) {
-        activity.status = ACTIVITY_STATUS.inactive;
-        setActivities(activities);
+  const updateActivity = (input: Activity) => {
+    const updatedActivities = activities.map((activity) => {
+      if (activity.id === input.id) {
+        input.tags = input.tags ? String(input.tags).split(",") : [];
+        input.status = input.status
+          ? ACTIVITY_STATUS.inactive
+          : ACTIVITY_STATUS.active;
+        input.startDate = dayjs(input.startDate);
+        input.endDate = dayjs(input.endDate);
+        activity = { ...activity, ...input };
       }
+      return activity;
     });
+
+    setActivities(updatedActivities);
   };
 
   const markCompleteActivity = (id: string) => {
@@ -106,6 +122,8 @@ const ActivityProvider = ({ children }: any) => {
         deleteActivity,
         markCompleteActivity,
         showSelectedActivity,
+        modalFormOpen,
+        updateModalForm,
       }}
     >
       {children}

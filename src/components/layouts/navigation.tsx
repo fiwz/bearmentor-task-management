@@ -1,4 +1,12 @@
+import React from "react";
+import {
+  ActivityContext,
+  ActivityContextType,
+} from "../../context/activity-context";
+
 const Navigation = () => {
+  const ctxValue = React.useContext(ActivityContext) as ActivityContextType;
+
   return (
     <>
       <div className="navbar bg-base-100 py-4">
@@ -50,9 +58,12 @@ const Navigation = () => {
           </a>
         </div>
         <div className="navbar-end">
-          <a href="#" className="btn btn-outline w-auto me-3">
+          <button
+            className="btn btn-sm btn-outline w-auto me-3"
+            onClick={() => ctxValue.updateModalForm(true)}
+          >
             Add Activity
-          </a>
+          </button>
         </div>
       </div>
     </>
