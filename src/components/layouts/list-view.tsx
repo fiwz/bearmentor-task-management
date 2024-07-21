@@ -1,9 +1,15 @@
-import { ActivityContext } from "../../context/activity-context";
-import { DaisySearchIcon } from "../icons/search";
-import ActivityPill from "../pill";
 import React, { useMemo, useState } from "react";
 import debouce from "lodash.debounce";
-// import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
+import { ActivityContext } from "../../context/activity-context";
+
+import ActivityPill from "../pill";
+import { DaisySearchIcon } from "../icons/search";
+import {
+  AdjustmentsHorizontalIcon,
+  ArrowDownIcon,
+  ArrowUpIcon,
+  CheckIcon,
+} from "@heroicons/react/24/solid";
 
 const ListView = ({ children }: any) => {
   const ctxValue = React.useContext(ActivityContext);
@@ -40,26 +46,77 @@ const ListView = ({ children }: any) => {
       <div className="text-secondary text-xl font-semibold pt-6 pb-3 text-center">
         All Activities
       </div>
-      <div className="flex my-3 align-middle gap-1 justify-end">
-        {/* <div className="dropdown dropdown-bottom">
-          <div tabIndex={0} role="button" className="text-sm">
-            <div className="flex text-sm gap-1">
-              <AdjustmentsHorizontalIcon className="size-5" />
-              Sort by
+      <div className="flex my-3 align-middle gap-1 justify-between">
+        <div>
+          <div className="dropdown dropdown-bottom">
+            <div tabIndex={0} role="button" className="text-sm">
+              <div className="flex text-sm gap-1">
+                <AdjustmentsHorizontalIcon className="size-5" />
+                Sort by
+              </div>
             </div>
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+            >
+              <li>
+                <a className="text-black text-sm">Default</a>
+              </li>
+              <li>
+                <a className="text-black text-sm">
+                  Activity Name <ArrowUpIcon className="size-2" />
+                </a>
+              </li>
+              <li>
+                <a className="text-black text-sm">
+                  Activity Name <ArrowDownIcon className="size-2" />
+                </a>
+              </li>
+              <li>
+                <a className="text-black text-sm">
+                  Start Date <ArrowUpIcon className="size-2" />
+                </a>
+              </li>
+              <li>
+                <a className="text-black text-sm">
+                  Start Date <ArrowDownIcon className="size-2" />
+                </a>
+              </li>
+              <li>
+                <a className="text-black text-sm">
+                  End Date <ArrowUpIcon className="size-2" />
+                </a>
+              </li>
+              <li>
+                <a className="text-black text-sm">
+                  End Date <ArrowDownIcon className="size-2" />
+                </a>
+              </li>
+            </ul>
           </div>
-          <ul
-            tabIndex={0}
-            className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
-          >
-            <li>
-              <a>Default</a>
-            </li>
-            <li>
-              <a>Item 2</a>
-            </li>
-          </ul>
-        </div> */}
+          <div className="dropdown dropdown-bottom ms-5">
+            <div tabIndex={0} role="button" className="text-sm">
+              <div className="flex text-sm gap-1">
+                <CheckIcon className="size-5" />
+                Status
+              </div>
+            </div>
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+            >
+              <li>
+                <a className="text-black text-sm">All</a>
+              </li>
+              <li>
+                <a className="text-black text-sm">Complete</a>
+              </li>
+              <li>
+                <a className="text-black text-sm">Incomplete</a>
+              </li>
+            </ul>
+          </div>
+        </div>
 
         <label className="input input-bordered input-sm flex items-center gap-2">
           <input
