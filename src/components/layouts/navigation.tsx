@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   ActivityContext,
   ActivityContextType,
@@ -39,14 +40,14 @@ const Navigation = () => {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>
-                <a className="text-neutral" href="/">
+                <Link to={`overview`} className="text-neutral">
                   Overview
-                </a>
+                </Link>
               </li>
               <li>
-                <a className="text-neutral" href="/list">
+                <Link to={`list`} className="text-neutral">
                   List
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

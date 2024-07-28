@@ -4,16 +4,27 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Master from "./components/layouts/master.tsx";
-// import ListView from "./components/layouts/list-view.tsx";
+import Section from "./components/section.tsx";
+import ListView from "./components/layouts/list-view.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Master></Master>,
-  },
-  {
-    path: "/list",
-    element: <Master></Master>,
+    children: [
+      {
+        index: true,
+        element: <Section></Section>,
+      },
+      {
+        path: "/overview",
+        element: <Section></Section>,
+      },
+      {
+        path: "/list",
+        element: <ListView></ListView>,
+      },
+    ],
   },
 ]);
 
