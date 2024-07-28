@@ -1,15 +1,11 @@
-import { useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import ActivityProvider from "../../context/activity-context";
 
 import Navigation from "./navigation";
-import Section from "../section";
 import { ActivityForm } from "../forms/activity-form";
 import { Intro } from "../intro";
-import ListView from "./list-view";
 
 const Master = ({ children }: any) => {
-  const location = useLocation();
-
   return (
     <>
       <ActivityProvider>
@@ -20,11 +16,7 @@ const Master = ({ children }: any) => {
             <Intro></Intro>
             <ActivityForm></ActivityForm>
 
-            {location.pathname.includes("/list") ? (
-              <ListView></ListView>
-            ) : (
-              <Section></Section>
-            )}
+            <Outlet />
           </div>
         </div>
       </ActivityProvider>
